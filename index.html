@@ -36,9 +36,13 @@
 
     let salida = "";
     let cantidad = parseInt(prompt("¿Cuántos lotes desea evaluar?"));
+
     if (isNaN(cantidad) || cantidad <= 0) {
       alert("Cantidad inválida");
     } else {
+      salida += "<table>";
+      salida += "<tr><th>Lote</th><th>Supervisor</th><th>Tipo de café</th><th>Kilos</th><th>Defectuosos</th><th>Precio/kg</th><th>Costo total</th><th>% Defectuosos</th><th>Calidad</th></tr>";
+
       for (let i = 1; i <= cantidad; i++) {
         let supervisor = prompt("Ingrese el nombre del supervisor:");
         if (!supervisor) {
@@ -106,25 +110,21 @@
           calidad = "Rechazado";
         }
 
-        salida += `
-          <div class="lote">
-            <h3>Lote ${i}</h3>
-            <p><strong>Supervisor:</strong> ${supervisor}</p>
-            <p><strong>Tipo de café:</strong> ${nombreCafe}</p>
-            <p><strong>Kilogramos procesados:</strong> ${kilos}</p>
-            <p><strong>Defectuosos:</strong> ${defectuosos}</p>
-            <p><strong>Precio por kilogramo:</strong> $${precioKg.toLocaleString()}</p>
-            <p><strong>Costo total:</strong> $${costoTotal.toLocaleString()}</p>
-            <p><strong>Porcentaje de defectuosos:</strong> ${porcentaje.toFixed(2)}%</p>
-            <p><strong>Calidad del lote:</strong> ${calidad}</p>
-          </div>
-        `;
+        salida += "<tr>";
+        salida += "<td>" + i + "</td>";
+        salida += "<td>" + supervisor + "</td>";
+        salida += "<td>" + nombreCafe + "</td>";
+        salida += "<td>" + kilos + "</td>";
+        salida += "<td>" + defectuosos + "</td>";
+        salida += "<td>$" + precioKg.toLocaleString() + "</td>";
+        salida += "<td>$" + costoTotal.toLocaleString() + "</td>";
+        salida += "<td>" + porcentaje.toFixed(2) + "%</td>";
+        salida += "<td>" + calidad + "</td>";
+        salida += "</tr>";
       }
 
-      document.getElementById("resultado").innerHTML = `
-        <h2>Resultados de Evaluación</h2>
-        ${salida}
-      `;
+      salida += "</table>";
+      document.getElementById("resultado").innerHTML = "<h2>Resultados de Evaluación</h2>" + salida;
     }
 </script>
 </body>
