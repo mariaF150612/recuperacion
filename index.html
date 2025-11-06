@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ejercicio CAFE ANDINO</title>
+      <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+      text-align: center;
+    }
+    #resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: left;
+      max-width: 600px;
+      margin: auto;
+    }
+    .lote {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<h1>Evaluación de Lote de Café</h1>
+<div id="resultado"></div>
+
+<script>
+
+    let salida = "";
+    let cantidad = parseInt(prompt("¿Cuántos lotes desea evaluar?"));
+    if (isNaN(cantidad) || cantidad <= 0) {
+      alert("Cantidad inválida");
+    } else {
+      for (let i = 1; i <= cantidad; i++) {
+        let supervisor = prompt("Ingrese el nombre del supervisor:");
+        if (!supervisor) {
+          alert("Nombre inválido");
+          continue;
+        }
+
+        let tipo = parseInt(prompt("Ingrese el tipo de café (1-5): \n1. Café Suave Tradicional $8000 \n2. Café Intenso $10000 \n3. Café Exportación $12000 \n4. Café Orgánico $15000 \n5. Café Premium Especial $18000"));
+        if (isNaN(tipo) || tipo < 1 || tipo > 5) {
+          alert("Tipo de café inválido");
+          continue;
+        }
+
+        let kilos = parseFloat(prompt("Ingrese los kilogramos procesados:"));
+        if (isNaN(kilos) || kilos <= 0) {
+          alert("Kilogramos inválidos");
+          continue;
+        }
+
+        let defectuosos = parseInt(prompt("Ingrese el número de defectuosos:"));
+        if (isNaN(defectuosos) || defectuosos < 0) {
+          alert("Número de defectuosos inválido");
+          continue;
+        }
+
+        let nombreCafe = "";
+        let precioKg = 0;
+
+        switch (tipo) {
+          case 1:
+            nombreCafe = "Café Suave Tradicional";
+            precioKg = 8000;
+            break;
+          case 2:
+            nombreCafe = "Café Intenso";
+            precioKg = 10000;
+            break;
+          case 3:
+            nombreCafe = "Café Exportación";
+            precioKg = 12000;
+            break;
+          case 4:
+            nombreCafe = "Café Orgánico";
+            precioKg = 15000;
+            break;
+          case 5:
+            nombreCafe = "Café Premium Especial";
+            precioKg = 18000;
+            break;
+        }
+
+        let porcentaje = (defectuosos * 100) / kilos;
+        let costoTotal = kilos * precioKg;
+
+        let calidad = "";
+        if (porcentaje <= 2) {
+          calidad = "Excelente";
+        } else if (porcentaje <= 4) {
+          calidad = "Bueno";
+        } else if (porcentaje <= 6) {
+          calidad = "Regular";
+        } else if (porcentaje <= 8) {
+          calidad = "Deficiente";
+        } else {
+          calidad = "Rechazado";
+        }
+
+        salida += `
+          <div class="lote">
+            <h3>Lote ${i}</h3>
+            <p><strong>Supervisor:</strong> ${supervisor}</p>
+            <p><strong>Tipo de café:</strong> ${nombreCafe}</p>
+            <p><strong>Kilogramos procesados:</strong> ${kilos}</p>
+            <p><strong>Defectuosos:</strong> ${defectuosos}</p>
+            <p><strong>Precio por kilogramo:</strong> $${precioKg.toLocaleString()}</p>
+            <p><strong>Costo total:</strong> $${costoTotal.toLocaleString()}</p>
+            <p><strong>Porcentaje de defectuosos:</strong> ${porcentaje.toFixed(2)}%</p>
+            <p><strong>Calidad del lote:</strong> ${calidad}</p>
+          </div>
+        `;
+      }
+
+      document.getElementById("resultado").innerHTML = `
+        <h2>Resultados de Evaluación</h2>
+        ${salida}
+      `;
+    }
+</script>
+</body>
+</html>
